@@ -5,7 +5,7 @@ string Utility::toString(Department department)
 {
 	switch (department) {
 	case Department::ComputerSciece:
-		return "資訊工程{";
+		return "資訊工程";
 	case Department::ElectricalEngineering:
 		return "電機工程";
 	case Department::ElectronicEngineering:
