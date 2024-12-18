@@ -8,7 +8,7 @@
 
 #include "Record.h"
 #include "Utility.h"
-#include "CourseApp1.h"
+#include "2024CourseApp.h"
 using namespace std;
 
 // 新增全域變數來儲存學生、老師、課程、選課紀錄的資料
@@ -16,14 +16,6 @@ vector<Student> students;
 vector<Teacher> teachers;
 vector<Course> courses;
 vector<Record> records;
-
-// 函數原型宣告
-void initializeData();
-void displayMenu();
-void listStudents();
-void listCourses();
-void listTeachers();
-void listRecords();
 
 int main()
 {
@@ -100,295 +92,43 @@ void initializeData()
 void displayMenu() {
 	int choice;
 	do {
-		std::cout << "=========================" << endl;
-		std::cout << "1. 列出學生資料" << endl;
-		std::cout << "2. 列出課程資料" << endl;
-		std::cout << "3. 列出教師資料" << endl;
-		std::cout << "4. 列出選課紀錄" << endl;
-		std::cout << "5. 查詢學生紀錄" << endl;
-		std::cout << "6. 查詢課程紀錄" << endl;
-		std::cout << "7. 查詢教師紀錄" << endl;
-		std::cout << "8. 查詢選課紀錄" << endl;
-		std::cout << "9. 新增學生資料" << endl;
-		std::cout << "0. 退出" << endl;
-		std::cout << "請選擇操作: ";
-		std::cin >> choice;
+		cout << "=========================" << endl;
+		cout << "1. 列出學生資料" << endl;
+		cout << "2. 列出課程資料" << endl;
+		cout << "3. 列出教師資料" << endl;
+		cout << "4. 列出選課紀錄" << endl;
+		cout << "0. 退出" << endl;
+		cout << "請選擇操作: ";
+		cin >> choice;
 
 		switch (choice) {
 		case 1:
-			std::cout << "列出學生資料" << endl;
+			cout << "列出學生資料" << endl;
 			listStudents();
 			break;
 		case 2:
-			std::cout << "列出課程資料" << endl;
-			listCourses();
 			break;
 		case 3:
-			std::cout << "列出教師資料" << endl;
-			listTeachers();
 			break;
 		case 4:
-			std::cout << "列出選課紀錄" << endl;
-			listRecords();
-			break;
-		case 5:
-			std::cout << "查詢學生紀錄" << endl;
-			break;
-		case 6:
-			std::cout << "查詢課程紀錄" << endl;
-			break;
-		case 7:
-			std::cout << "查詢教師紀錄" << endl;
-			break;
-		case 8:
-			std::cout << "查詢選課紀錄" << endl;
-			break;
-		case 9:
-			std::cout << "新增學生資料" << endl;
 			break;
 		case 0:
-			std::cout << "退出" << endl;
+			cout << "退出" << endl;
 			break;
 		default:
-			std::cout << "無效選擇" << endl;
+			cout << "無效選擇" << endl;
 			break;
 		}
 	} while (choice != 0);
 }
 
-
-void listStudents() {
-	std::cout << "學生資料總共有" << students.size() << "筆" << endl;
-	std::cout << "----------------" << endl;
+void listStudents()
+{
+	cout << "學生資料總共有" << students.size() << "筆" << endl;
+	cout << "----------------" << endl;
 	for (auto student : students) {
 		student.display();
-		std::cout << endl;
+		cout << endl;
 	}
-	std::cout << endl;
-}
-
-void listTeachers() {
-	std::cout << "教師資料總共有" << teachers.size() << "筆" << endl;
-	std::cout << "----------------" << endl;
-	for (auto teacher : teachers) {
-		teacher.display();
-		std::cout << endl;
-	}
-	std::cout << endl;
-}
-
-void listRecords() {
-	std::cout << "選課紀錄總共有" << records.size() << "筆" << endl;
-	std::cout << "----------------" << endl;
-	for (const auto& record : records) {
-		// 找到學生姓名
-		string studentName;
-		for (const auto& student : students) {
-			if (student.getStudentId() == record.getStudentId()) {
-				studentName = student.getLastName() + student.getFirstName();
-				break;
-			}
-		}
-		std::cout << "學生姓名: " << studentName << ", ";
-		const_cast<Record&>(record).display(); // 使用const_cast移除const限定詞
-		std::cout << endl;
-	}
-	std::cout << endl;
-}
-
-void listCourses() {
-	std::cout << "課程資料總共有" << courses.size() << "筆" << endl;
-	std::cout << "----------------" << endl;
-	for (const auto& course : courses) {
-		course.display();
-		std::cout << endl;
-	}
-	std::cout << endl;
-}
-void displayMenu() {
-	int choice;
-	do {
-		std::cout << "=========================" << endl;
-		std::cout << "1. 列出學生資料" << endl;
-		std::cout << "2. 列出課程資料" << endl;
-		std::cout << "3. 列出教師資料" << endl;
-		std::cout << "4. 列出選課紀錄" << endl;
-		std::cout << "5. 查詢學生紀錄" << endl;
-		std::cout << "6. 查詢課程紀錄" << endl;
-		std::cout << "7. 查詢教師紀錄" << endl;
-		std::cout << "8. 查詢選課紀錄" << endl;
-		std::cout << "9. 新增學生資料" << endl;
-		std::cout << "0. 退出" << endl;
-		std::cout << "請選擇操作: ";
-		std::cin >> choice;
-
-		switch (choice) {
-		case 1:
-			std::cout << "列出學生資料" << endl;
-			listStudents();
-			break;
-		case 2:
-			std::cout << "列出課程資料" << endl;
-			listCourses();
-			break;
-		case 3:
-			std::cout << "列出教師資料" << endl;
-			listTeachers();
-			break;
-		case 4:
-			std::cout << "列出選課紀錄" << endl;
-			listRecords();
-			break;
-		case 5:
-			std::cout << "查詢學生紀錄" << endl;
-			queryStudent();
-			break;
-		case 6:
-			std::cout << "查詢課程紀錄" << endl;
-			break;
-		case 7:
-			std::cout << "查詢教師紀錄" << endl;
-			break;
-		case 8:
-			std::cout << "查詢選課紀錄" << endl;
-			break;
-		case 9:
-			std::cout << "新增學生資料" << endl;
-			addStudent();
-			break;
-		case 0:
-			std::cout << "退出" << endl;
-			break;
-		default:
-			std::cout << "無效選擇" << endl;
-			break;
-		}
-	} while (choice != 0);
-}
-
-void queryStudent()
-{
-	string studentId;
-	std::cout << "請輸入學生編號: ";
-	std::cin >> studentId;
-
-	bool found = false;
-	for (const auto& student : students) {
-		if (student.getStudentId() == studentId) {
-			student.display();
-			found = true;
-			break;
-		}
-	}
-	if (!found)
-		std::cout << "找不到學號為" << studentId << "的學生" << endl;
-}
-
-void addStudent()
-{
-	string studentId, lastName, firstName, id, birthDate, gender;
-	int departmentChoice, classNameChoice;
-
-	cout << "身分證字號: ";
-	cin >> id;
-	cout << "姓: ";
-	cin >> lastName;
-	cout << "名: ";
-	cin >> firstName;
-	cout << "性別： ";
-	cin >> gender;
-	cout << "生日: ";
-	cin >> birthDate;
-	cout << "學號: ";
-	cin >> studentId;
-
-	for (int i = 0; i < static_cast<int>(Department::Last); i++) {
-		cout << i << ". " << Utility::toString(static_cast<Department>(i)) << endl;
-	}
-	cout << "請選擇科系: ";
-	cin >> departmentChoice;
-	Department department = static_cast<Department>(departmentChoice);
-
-	cout << "班級: " << endl;
-	for (int i = 0; i < static_cast<int>(ClassName::Last); i++) {
-		cout << i << ". " << Utility::toString(static_cast<ClassName>(i)) << endl;
-	}
-	cout << "請選擇班級: ";
-	cin >> classNameChoice;
-	ClassName className = static_cast<ClassName>(classNameChoice);
-
-	students.push_back(Student(id, lastName, firstName, gender, birthDate, studentId, department, className));
-}
-
-    void addStudent()
-    {
-        string studentId, lastName, firstName, id, birthDate, gender;
-        int departmentChoice, classNameChoice;
-
-		std:: cout << "身分證字號: ";
-        cin >> id;
-        cout << "姓: ";
-        cin >> lastName;
-        cout << "名: ";
-        cin >> firstName;
-        cout << "性別： ";
-        cin >> gender;
-        cout << "生日: ";
-        cin >> birthDate;
-        cout << "學號: ";
-        cin >> studentId;
-
-        for (int i = 0; i < static_cast<int>(Department::Last); i++) {
-            cout << i << ". " << Utility::toString(static_cast<Department>(i)) << endl;
-        }
-        cout << "請選擇科系: ";
-        cin >> departmentChoice;
-        Department department = static_cast<Department>(departmentChoice);
-
-        cout << "班級: " << endl;
-        for (int i = 0; i < static_cast<int>(ClassName::Last); i++) {
-            cout << i << ". " << Utility::toString(static_cast<ClassName>(i)) << endl;
-        }
-        cout << "請選擇班級: ";
-        cin >> classNameChoice;
-        ClassName className = static_cast<ClassName>(classNameChoice);
-
-        students.push_back(Student(id, lastName, firstName, gender, birthDate, studentId, department, className));
-    }
-}
-void addStudent()
-{
-	string studentId, lastName, id, birhDate,gender;
-	int departmentChoice, classNameChoice;
-
-	cout << "身分證字號: ";
-	cin >> id;
-	cout << "姓: ";
-	cin >> lastName;
-	cout << "名: ";
-	cin >> firstName;
-	cout << "性別： ";
-	cin >> gender;
-	cout << "生日: ";
-	cin >> birthDate;
-	cout << "學號: ";
-	cin >> studentId;
-
-
-	for (int i = 0; i < static_cast<int>(Department::Last); i++) {
-		cout << i << ". " << Utility::toString(static_cast<Department>(i)) << endl;
-	}
-	cout << "請選擇科系: ";
-	cin >> departmentChoice;
-	Department department = static_cast<Department>(departmentChoice);
-
-	cout << "班級: " << endl;
-	for (int i = 0; i < static_cast<int>(ClassName::Last); i++) {
-		cout << i << ". " << Utility::toString(static_cast<ClassName>(i)) << endl;
-	}
-	cout << "請選擇班級: ";
-	cin >> classNameChoice;
-	ClassName className = static_cast<ClassName>(classNameChoice);
-
-	students.push_back(Student(id, lastName, firstName, gender, birthDate, studentId, department, className));
+	cout << endl;
 }
