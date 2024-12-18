@@ -36,3 +36,15 @@
 - 瞭解vector容器的push_back()和size()方法的意義
 - 使用do-while迴圈
 - 使用switch-case敘述# CourseApp1
+
+##ver5
+- 使用system指令
+- 了解程式編譯與連結的過程，以及其所產生的錯誤訊息
+- 使用C++的foreach迴圈
+- 了解static_cast的用法
+- 新增以下功能：
+
+1. 新增學生資料
+1. 新增教師資料
+1. 新增課程資料
+1. 新增選課紀錄
