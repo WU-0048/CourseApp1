@@ -49,15 +49,15 @@ void initializeData()
 	courses.push_back(Course("C005", "Visual Basic Programming", "這門課程教授Visual Basic程式語言"));
 
 	// 新增5筆學生資料
-    students.push_back(Student("I001", "陳", "小明", "男", "1999-01-01", "S001", Department::ComputerScience, ClassName::_1A));
+	students.push_back(Student("I001", "陳", "小明", "男", "1999-01-01", "S001", Department::ComputerScience, ClassName::_1A));
 	students.push_back(Student("I002", "林", "小華", "男", "1999-02-02", "S002", Department::ElectricalEngineering, ClassName::_1A));
 	students.push_back(Student("I003", "黃", "小美", "女", "1999-03-03", "S003", Department::InformationManagement, ClassName::_1B));
-    students.push_back(Student("I004", "張", "小強", "男", "1999-04-04", "S004", Department::ComputerScience, ClassName::_2A));
+	students.push_back(Student("I004", "張", "小強", "男", "1999-04-04", "S004", Department::ComputerScience, ClassName::_2A));
 	students.push_back(Student("I005", "李", "小花", "女", "1999-05-05", "S005", Department::ElectronicEngineering, ClassName::_2B));
 
 	// 新增2筆老師資料
 	vector<Course> teacher1_courses = { courses[0], courses[1], courses[2] };
-    teachers.push_back(Teacher("T001", "王", "大富", "男", "1980-7-1", "T001", Department::ComputerScience, ClassName::_1A, teacher1_courses));
+	teachers.push_back(Teacher("T001", "王", "大富", "男", "1980-7-1", "T001", Department::ComputerScience, ClassName::_1A, teacher1_courses));
 	vector<Course> teacher2_courses = { courses[3], courses[4] };
 	teachers.push_back(Teacher("T002", "李", "大貴", "男", "1985-5-5", "T002", Department::InformationManagement, ClassName::_1B, teacher2_courses));
 
@@ -87,6 +87,9 @@ void displayMenu() {
 		std::cout << "7. 查詢教師紀錄" << endl;
 		std::cout << "8. 查詢選課紀錄" << endl;
 		std::cout << "9. 新增學生資料" << endl;
+		std::cout << "10. 新增教師資料" << endl;
+		std::cout << "11. 新增課程資料" << endl;
+		std::cout << "12. 新增選課紀錄" << endl;
 		std::cout << "0. 退出" << endl;
 		std::cout << "請選擇操作: ";
 		std::cin >> choice;
@@ -261,6 +264,7 @@ void listCourses() {
 	}
 	std::cout << endl;
 }
+
 void queryRecord()
 {
 	string studentId, courseId;
@@ -272,7 +276,27 @@ void queryRecord()
 	bool found = false;
 	for (const auto& record : records) {
 		if (record.getStudentId() == studentId && record.getCourseId() == courseId) {
+			// 顯示選課紀錄
 			record.display();
+
+			// 找到學生姓名
+			string studentName;
+			for (const auto& student : students) {
+				if (student.getStudentId() == studentId) {
+					studentName = student.getLastName() + student.getFirstName();
+					break;
+				}
+			}
+
+			// 找到課程資訊
+			for (const auto& course : courses) {
+				if (course.getCourseId() == courseId) {
+					std::cout << "學生姓名: " << studentName << endl;
+					course.display();
+					break;
+				}
+			}
+
 			found = true;
 			break;
 		}
@@ -357,7 +381,6 @@ void addTeacher()
 	teachers.push_back(Teacher(id, lastName, firstName, gender, birthDate, teacherId, department, className, courses));
 }
 
-
 void addCourse()
 {
 	string courseId, courseName, courseDescription;
@@ -379,3 +402,4 @@ void addRecord()
 	cin >> courseId;
 	records.push_back(Record(studentId, courseId));
 }
+
