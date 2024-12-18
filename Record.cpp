@@ -32,7 +32,7 @@ string Record::getRecordDate() const
 	return string(buffer);
 }
 
-void Record::display()
+void Record::display() const
 {
 	cout << "選課序號:" << getRecordId() << endl;
 	cout << "學號:" << getStudentId() << endl;

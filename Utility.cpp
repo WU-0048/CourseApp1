@@ -1,10 +1,12 @@
 #include "Utility.h"
 #include <string>
 
+using namespace std; // Add this line to fix the "string" undefined error
+
 string Utility::toString(Department department)
 {
 	switch (department) {
-	case Department::ComputerSciece:
+	case Department::ComputerScience:
 		return "資訊工程";
 	case Department::ElectricalEngineering:
 		return "電機工程";

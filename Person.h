@@ -16,7 +16,7 @@ public:
 	Person(const string& id, const string& lastName, const string& firstName, const string& gender, const string& birthDate);
 	Person();
 
-	// Gette
+	// Getter
 	string getId() const;
 	string getLastName() const;
 	string getFirstName() const;

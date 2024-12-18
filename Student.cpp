@@ -39,7 +39,7 @@ void Student::setClassName(ClassName className)
 void Student::display() const
 {
 	Person::display();
-	cout << ": " << studentId << endl;
-	cout << ": " << Utility::toString(department) << endl;
-	cout << ": " << Utility::toString(className) << endl;
+	cout << "學號: " << studentId << endl;
+	cout << "科系: " << Utility::toString(department) << endl;
+	cout << "班級: " << Utility::toString(className) << endl;
 }

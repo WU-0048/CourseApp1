@@ -24,4 +24,3 @@ public:
 	void setCourseDescription(const string& courseDescription);
 	void display() const;
 };
-
