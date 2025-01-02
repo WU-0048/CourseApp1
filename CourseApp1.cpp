@@ -1,6 +1,7 @@
 ﻿#include <string>
 #include <iostream>
 #include <vector>
+#include <fstream>
 //#include "Person.h"
 #include "Student.h"
 #include "Teacher.h"
@@ -9,6 +10,8 @@
 #include "Record.h"
 #include "Utility.h"
 #include "CourseApp1.h"
+
+using namespace RecordNamespace;
 using namespace std;
 
 // 新增全域變數來儲存學生、老師、課程、選課紀錄的資料
@@ -38,7 +41,7 @@ void deleteCourse();
 void insertStudent();
 void insertTeacher();
 void insertCourse();
-
+void saveCourses();
 
 int main()
 {
@@ -103,6 +106,7 @@ void displayMenu() {
 		std::cout << "16. 插入學生資料" << endl;
 		std::cout << "17. 插入教師資料" << endl;
 		std::cout << "18. 插入課程資料" << endl;
+		std::cout << "19. 儲存課程紀錄" << endl;
 		std::cout << "0. 退出" << endl;
 		std::cout << "請選擇操作: ";
 		std::cin >> choice;
@@ -179,6 +183,10 @@ void displayMenu() {
 		case 18:
 			std::cout << "插入課程資料" << endl;
 			insertCourse();
+			break;
+		case 19:
+			std::cout << "儲存課程紀錄" << endl;
+			saveCourses();
 			break;
 		case 0:
 			std::cout << "退出" << endl;
@@ -442,21 +450,21 @@ void addRecord()
 
 void deleteStudent()
 {
-	string studentId;
-	std::cout << "請輸入要刪除的學生編號: ";
-	std::cin >> studentId;
+    string studentId;
+    std::cout << "請輸入要刪除的學生編號: ";
+    std::cin >> studentId;
 
-	auto it = std::remove_if(students.begin(), students.end(), [&](const Student& student) {
-		return student.getStudentId() == studentId;
-		});
+    auto it = std::remove_if(students.begin(), students.end(), [&](const Student& student) {
+        return student.getStudentId() == studentId;
+    });
 
-	if (it != students.end()) {
-		students.erase(it, students.end());
-		std::cout << "學生資料已刪除" << endl;
-	}
-	else {
-		std::cout << "找不到學號為" << studentId << "的學生" << endl;
-	}
+    if (it != students.end()) {
+        students.erase(it, students.end());
+        std::cout << "學生資料已刪除" << endl;
+    }
+    else {
+        std::cout << "找不到學號為" << studentId << "的學生" << endl;
+    }
 }
 
 void deleteTeacher()
@@ -596,6 +604,20 @@ void insertCourse()
 	cin >> courseDescription;
 	auto it = courses.begin();
 	courses.insert(it + position, Course(courseId, courseName, courseDescription));
+}
+
+
+void saveCourses() {
+    ofstream outFile("records.txt");
+    if (!outFile) {
+        cerr << "無法開啟檔案" << endl;
+        return;
+    }
+    for (const auto& record : records) {
+        record.save(outFile);
+    }
+    outFile.close();
+    cout << "選課紀錄已儲存到 records.txt" << endl;
 }
 
 
