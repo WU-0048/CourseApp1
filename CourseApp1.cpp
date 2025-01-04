@@ -41,7 +41,7 @@ void deleteCourse();
 void insertStudent();
 void insertTeacher();
 void insertCourse();
-void saveCourses();
+void saveRecordsToFile(const string& filename);
 
 int main()
 {
@@ -115,78 +115,97 @@ void displayMenu() {
 		case 1:
 			std::cout << "列出學生資料" << endl;
 			listStudents();
+			system("pause");
 			break;
 		case 2:
 			std::cout << "列出課程資料" << endl;
 			listCourses();
+			system("pause");
 			break;
 		case 3:
 			std::cout << "列出教師資料" << endl;
 			listTeachers();
+			system("pause");
 			break;
 		case 4:
 			std::cout << "列出選課紀錄" << endl;
 			listRecords();
+			system("pause");
 			break;
 		case 5:
 			std::cout << "查詢學生紀錄" << endl;
 			queryStudent();
+			system("pause");
 			break;
 		case 6:
 			std::cout << "查詢課程紀錄" << endl;
 			queryCourse();
+			system("pause");
 			break;
 		case 7:
 			std::cout << "查詢教師紀錄" << endl;
 			queryTeacher();
+			system("pause");
 			break;
 		case 8:
 			std::cout << "查詢選課紀錄" << endl;
 			queryRecord();
+			system("pause");
 			break;
 		case 9:
 			std::cout << "新增學生資料" << endl;
 			addStudent();
+			system("pause");
 			break;
 		case 10:
 			std::cout << "新增教師資料" << endl;
 			addTeacher();
+			system("pause");
 			break;
 		case 11:
 			std::cout << "新增課程資料" << endl;
 			addCourse();
+			system("pause");
 			break;
 		case 12:
 			std::cout << "新增選課紀錄" << endl;
 			addRecord();
+			system("pause");
 			break;
 		case 13:
 			std::cout << "刪除學生資料" << endl;
 			deleteStudent();
+			system("pause");
 			break;
 		case 14:
 			std::cout << "刪除教師資料" << endl;
 			deleteTeacher();
+			system("pause");
 			break;
 		case 15:
 			std::cout << "刪除課程資料" << endl;
 			deleteCourse();
+			system("pause");
 			break;
 		case 16:
 			std::cout << "插入學生資料" << endl;
 			insertStudent();
+			system("pause");
 			break;
 		case 17:
 			std::cout << "插入教師資料" << endl;
 			insertTeacher();
+			system("pause");
 			break;
 		case 18:
 			std::cout << "插入課程資料" << endl;
 			insertCourse();
+			system("pause");
 			break;
 		case 19:
 			std::cout << "儲存課程紀錄" << endl;
-			saveCourses();
+			saveRecordsToFile("records.txt");
+			system("pause");
 			break;
 		case 0:
 			std::cout << "退出" << endl;
@@ -607,18 +626,48 @@ void insertCourse()
 }
 
 
-void saveCourses() {
-    ofstream outFile("records.txt");
-    if (!outFile) {
-        cerr << "無法開啟檔案" << endl;
-        return;
-    }
-    for (const auto& record : records) {
-        record.save(outFile);
-    }
-    outFile.close();
-    cout << "選課紀錄已儲存到 records.txt" << endl;
-}
+void saveRecordsToFile(const string& filename) {
+	ofstream outFile(filename);
+	if (!outFile) {
+		cerr << "無法打開文件: " << filename << endl;
+		return;
+	}
 
+	for (const auto& record : records) {
+		// 查找學生
+		auto studentIt = find_if(students.begin(), students.end(), [&record](const Student& student) {
+			return student.getStudentId() == record.getStudentId();
+			});
+
+		// 查找課程
+		auto courseIt = find_if(courses.begin(), courses.end(), [&record](const Course& course) {
+			return course.getCourseId() == record.getCourseId();
+			});
+
+		if (studentIt != students.end() && courseIt != courses.end()) {
+			outFile << "選課紀錄編號: " << record.getRecordId() << endl;
+			outFile << "選課日期: " << record.getRecordDate() << endl;
+			outFile << "學生資料:" << endl;
+			outFile << "----------------" << endl;
+			outFile << "學號: " << studentIt->getStudentId() << endl;
+			outFile << "姓名: " << studentIt->getLastName() << studentIt->getFirstName() << endl;
+			outFile << "性別: " << studentIt->getGender() << endl;
+			outFile << "生日: " << studentIt->getBirthDate() << endl;
+			outFile << "科系: " << Utility::toString(studentIt->getDepartment()) << endl;
+			outFile << "班級: " << Utility::toString(studentIt->getClassName()) << endl;
+			outFile << "----------------" << endl;
+			outFile << "課程資料:" << endl;
+			outFile << "----------------" << endl;
+			outFile << "課程編號: " << courseIt->getCourseId() << endl;
+			outFile << "課程名稱: " << courseIt->getCourseName() << endl;
+			outFile << "課程描述: " << courseIt->getCourseDescription() << endl;
+			outFile << "===================" << endl;
+			outFile << endl;
+		}
+	}
+
+	outFile.close();
+	cout << "選課紀錄已保存到文件: " << filename << endl;
+}
 
 
